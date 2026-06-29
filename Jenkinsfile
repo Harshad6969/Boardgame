@@ -1,32 +1,39 @@
 pipeline {
-    agent {label 'slave1'}
+    agent any 
+    
     tools {
-        maven 'Maven'
-        jdk 'jdk17'
+        // Removed the colon here
+        jdk 'jdk17' 
+        // Ensure 'maven3' matches your Global Tool Configuration name
+         
     }
+    
+    // There is only ONE 'stages' block wrapping all individual stages
     stages {
-        stage('Git Checkout') {
+        
+        stage('github project') {
             steps {
-                git branch: 'main', url: 'https://github.com/jaiswaladi246/Boardgame.git'
+                git branch: 'main', url: 'https://github.com/Harshad-DevOps-Master/Boardgame_new.git'
             }
         }
         
-        stage('Compile') {
+        stage('compile') {
             steps {
-               sh "mvn compile"
+                sh "mvn compile"
             }
         }
         
-        stage('Test') {
+        stage('test') {
             steps {
-                 sh "mvn test"
+                sh "mvn test"
             }
         }
         
-        stage('Build') {
+        stage('package') {
             steps {
-                 sh "mvn package"
+                sh "mvn package"
             }
         }
-    }
+        
+    } // End of stages
 }
