@@ -1,0 +1,21 @@
+build: 
+  name: Build
+  runs-on: ubuntu-latest
+  env:
+    NEXUS_USERNAME: ${{secrets.NEXUS_USERNAME}}
+    NEXUS_PASSWORD: ${{secrets.NEXUS_PASSWORD}}
+ needs: pre-build
+ steps:
+   - uses: actions/checkout@v4
+   - uses: actions/setup-java@v4
+    With:
+      java-version: '17'
+      distribution: 'temurin'
+      cache: maven
+      server-id: nexus
+      server-username: NEXUS_USERNAME
+      server-password: NEXUS_PASSWORD
+   - run: |
+      mvn test
+      echo "App Name: $APP_NAME"
+      echo "Stage Name: $STAGE_NAME"
